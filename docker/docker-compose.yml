@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  authorization-database:
+    container_name: authorization-database
+    hostname: authorization-database
+    image: mariadb
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: p@ssw0rd
+      MARIADB_USER: authorization_user
+      MARIADB_PASSWORD: p@ssw0rd
+      MARIADB_DATABASE: secure

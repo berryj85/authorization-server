@@ -6,28 +6,19 @@ server:
 spring:
   profiles:
     active: dev
-  security:
-    oauth2:
-      authorizationserver:
-        client:
-          oidc-client:
-            registration:
-              client-id: "oidc-client"
-              client-secret: "{noop}secret"
-              client-authentication-methods:
-                - "client_secret_basic"
-              authorization-grant-types:
-                - "authorization_code"
-                - "refresh_token"
-              redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/oidc-client"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
-              scopes:
-                - "openid"
-                - "profile"
-            require-authorization-consent: true
+  datasource:
+    url: jdbc:mariadb://localhost:3307/secure
+    username: authorization_user
+    password: p@ssw0rd
+    driver-class: org.mariadb.jdbc.Driver
+    test-while-idle: true
+    validation-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl: validate
+      dialect: org.hibernate.dialect.MariaDBDialect
 
 logging:
   level:
-    org.springframework.security: trace
+    root: INFO
+    org.springframework.security: TRACE

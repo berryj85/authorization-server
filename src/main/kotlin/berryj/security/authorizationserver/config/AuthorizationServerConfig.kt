@@ -18,8 +18,8 @@ import java.util.*
 
 /**
  * Spring Authorization Server Config
- * @see <a href="https://docs.spring.io/spring-authorization-server/docs/current/reference/html/index.html">spring-authorization-server</a>
- * @see https://www.appsdeveloperblog.com/spring-authorization-server-tutorial/
+ * @see https://docs.spring.io/spring-authorization-server/docs/current/reference/html/index.html
+ * @see https://www.appsdeveloperblog.com/spring-authorization-server-tutorial
  */
 @Configuration
 class AuthorizationServerConfig {

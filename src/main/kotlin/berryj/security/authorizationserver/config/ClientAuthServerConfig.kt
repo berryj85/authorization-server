@@ -2,12 +2,17 @@ package berryj.security.authorizationserver.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod
 import org.springframework.security.oauth2.core.oidc.OidcScopes
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings
+import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import java.util.*
 
 @Configuration
@@ -31,5 +36,24 @@ class ClientAuthServerConfig {
             .scope("read")
             .build();
         return InMemoryRegisteredClientRepository(registeredClient)
+    }
+
+    @Bean
+    fun clientSettings(): ClientSettings {
+        return ClientSettings.builder()
+            .requireAuthorizationConsent(false)
+            .requireProofKey(false)
+            .build()
+    }
+
+    @Bean
+    // 	An instance of UserDetailsService for retrieving users to authenticate.
+    fun userDetailsService(): UserDetailsService {
+        val encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+        val userDetails = User.withUsername("admin")
+            .password(encoder.encode("password"))
+            .roles("USER")
+            .build()
+        return InMemoryUserDetailsManager(userDetails)
     }
 }
